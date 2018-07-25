@@ -641,6 +641,7 @@ class scene06{
 		this.start = generatePoint();
 		this.end = generatePoint();
 		this.pointer = generateMovePoint();
+		this.pastNo = 0;
 
 		this.container.position.set( _center.x, _center.y, _center.z );
 
@@ -707,10 +708,15 @@ class scene06{
 		this.pointer.position.z = _pos.z;
 
 		//	回転
-		var _dx = this.pointer.position.x - _past.x;
-		var _dz = this.pointer.position.z - _past.z;
-		var _rad = Math.atan2( _dz, _dx );
-		this.pointer.rotation.y = - _rad;
+		if( this.pastNo != _index )
+		{
+			var _dx = this.pointer.position.x - _past.x;
+			var _dz = this.pointer.position.z - _past.z;
+			var _rad = Math.atan2( _dz, _dx );
+			this.pointer.rotation.y = - _rad;
+		}
+
+		this.pastNo = _index;
 
 		//	update animation
 		if ( this.mixers.length > 0 ) {
