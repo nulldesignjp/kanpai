@@ -51,7 +51,7 @@ window.onload = function(){
 				_pig = new THREE.Mesh( geometry, _material );
 				_pig.geometry.computeBoundingBox();
 				_pig.geometry.computeBoundingSphere();
-				var _scale = _viewScale / _pig.geometry.boundingSphere.radius;
+				var _scale = _viewScale / _pig.geometry.boundingSphere.radius * 0.75;
 				_pig.scale.set( _scale, _scale, _scale );
 
 				initWebGL();
@@ -86,8 +86,8 @@ window.onload = function(){
 		//	pigs
 		for( var i = 0; i < 50; i++ ){
 			var _p = _pig.clone();
-			_p.position.x = ( Math.random() - 0.5 ) * 3200;
-			_p.position.z = ( Math.random() - 0.5 ) * 3200;
+			_p.position.x = ( Math.random() - 0.5 ) * 6400;
+			_p.position.z = ( Math.random() - 0.5 ) * 6400;
 			_p.rotation.y = Math.random() * Math.PI * 2.0;
 			_world.add( _p );
 		}

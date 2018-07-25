@@ -28,16 +28,45 @@ class scene000{
 
 		$('body').append( this.label0 );
 
+		this.pointer.position.x = 100;
+		this.pointer.position.z = 100;
+
 	}
 
 	update( _time ){
 		var _past = this.pointer.position.clone();
 		//	_pointerは_endとの位置や距離に応じて位置を変える
 		this.pointer.position.add( this.velocity );
-		if( this.pointer.position.x > 100 )
+
+		var _pos = this.pointer.position
+		if( _pos.x > 100 && _pos.z >= 0 )
 		{
-			this.pointer.position.x = -100;
+			_pos.x = 100;
+			_pos.z = 100;
+			this.velocity.x = 0;
+			this.velocity.z = -1;
+		} else if( _pos.x >= 0 && _pos.z < -100 ){
+			_pos.x = 100;
+			_pos.z = -100;
+			this.velocity.x = -1;
+			this.velocity.z = 0;
+		} else if( _pos.x < -100 && _pos.z <= 0 ){
+			_pos.x = -100;
+			_pos.z = -100;
+			this.velocity.x = 0;
+			this.velocity.z = 1;
+		} else if( _pos.x <= 0 && _pos.z > 100 ){
+			_pos.x = -100;
+			_pos.z = 100;
+			this.velocity.x = 1;
+			this.velocity.z = 0;
 		}
+
+		//	回転
+		var _dx = this.pointer.position.x - _past.x;
+		var _dz = this.pointer.position.z - _past.z;
+		var _rad = Math.atan2( _dz, _dx );
+		this.pointer.rotation.y = - _rad;
 
 		//	update animation
 		if ( this.mixers.length > 0 ) {
@@ -1148,12 +1177,6 @@ function generateGrid(){
 }
 
 function generatePoint(){
-	// let _g = new THREE.BoxGeometry( 20, 20, 20 );
-	// let _m = new THREE.MeshPhongMaterial({
-	// 	//wireframe: true,
-	// 	color: 0xFF0000
-	// });
-	// return new THREE.Mesh( _g, _m );
 	return new THREE.Object3D();
 }
 
