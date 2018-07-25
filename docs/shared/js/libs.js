@@ -594,8 +594,11 @@ class scene05{
 		//	回転
 		var _dx = this.pointer.position.x - _past.x;
 		var _dz = this.pointer.position.z - _past.z;
-		var _rad = Math.atan2( _dz, _dx );
-		this.pointer.rotation.y = - _rad;
+		if( _dx * _dz != 0 )
+		{
+			var _rad = Math.atan2( _dz, _dx );
+			this.pointer.rotation.y = - _rad;
+		}
 
 		//	update animation
 		if ( this.mixers.length > 0 ) {
